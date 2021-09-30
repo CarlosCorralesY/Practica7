@@ -1,0 +1,166 @@
+import ply.lex as lex
+reserved = {
+    'si' : 'IF',
+    'entonce' : 'ELSE',
+    'mientras' : 'WHILE',
+    'para' : 'FOR',
+    'Detente' : 'BREAK',
+    'gimnasio': 'CLASS',
+    'regresa' : 'RETURN',
+    'cierto' : 'TRUE',
+    'falacia' : 'FALSE',
+    'y' : 'AND',
+    'o' : 'OR',
+    'es': 'IS',
+    'entero' : 'INTEGER',
+    'flotante' : 'FLOAT',
+    'doble' : 'DOUBLE',
+    'letra' : 'CHARACTER',
+    'palabra' : 'STRING',
+    'boleano' : 'BOOLEAN',
+    'pokebola' : 'MAIN',
+    'obten' : 'INPUT',
+    'habla' : 'OUTPUT',
+    'trata':'TRY',
+    'captura': 'CATCH',
+    'entrenador' : 'FUNTION',
+    'yo_te_elijo' : 'PRINT'
+}
+ 
+# List of token names. This is always required
+tokens = ('comment_init',
+'comment_fin',
+'id',
+'number',
+'oper_suma',
+'oper_dif',
+'oper_div',
+'oper_mult',
+'oper_asig',
+'oper_mod',
+'oper_pot',
+'oper_mayor',
+'oper_menor',
+'oper_identico',
+'oper_diferente',
+'oper_neg',
+'oper_mayorigu',
+'oper_menorigu',
+'par_init',
+'par_fin',
+'key_init',
+'key_fin',
+'corch_init',
+'corch_fin',
+'oper_access',
+'comma',
+'texto') + tuple(reserved.values()) 
+t_oper_identico = r'=='
+t_oper_mayorigu = r'>='
+t_oper_menorigu = r'<='
+t_oper_diferente = r'\!=' #Here
+t_oper_suma = r'\+'
+t_oper_dif = r'-'
+t_oper_mult = r'\*'
+t_oper_div = r'/'
+t_par_init = r'\('
+t_par_fin = r'\)'
+t_oper_asig = r'='
+t_oper_mod = r'%'
+t_oper_mayor = r'>'
+t_oper_menor = r'<'
+t_oper_neg = r'\!'
+t_key_init = r'{'
+t_key_fin = r'}'
+t_corch_init = r'\['
+t_corch_fin = r'\]'
+t_oper_access = r'.'
+t_comma = r','
+
+def t_id(t):
+     r'[a-zA-Z_][a-zA-Z_0-9]*'
+     t.type = reserved.get(t.value,'id')   
+
+     return t
+
+def t_number(t):
+  r'\d+'
+  t.value = int(t.value) 
+  return t
+
+def t_newline(t):
+  r'\n+'
+  t.lexer.lineno += len(t.value)
+
+t_ignore = ' \t'
+
+def t_error(t):
+  print("Illegal character ’ %s’" % t.value[0])
+  t.lexer.skip(1)
+
+lexer = lex.lex()
+
+
+lexer = lex.lex()
+
+print("Ej1:");
+ej1 = """3 + 4 * 10 +
+-20 *2"""
+
+
+
+lexer.input(ej1)
+
+
+lexer.input(ej1)
+while True:
+  tok = lexer.token()
+  if not tok:
+    break 
+  print(tok.type, tok.value, tok.lineno, tok.lexpos)
+
+print("Ej2:");
+ej2 = """Hola + Mundo"""
+
+
+lexer.input(ej2)
+
+
+lexer.input(ej2)
+while True:
+  tok = lexer.token()
+  if not tok:
+    break 
+  print(tok.type, tok.value, tok.lineno, tok.lexpos)
+
+
+
+print("Ej3:");
+ej3 = """daa/fdaso + as486 + 7 * 1 - a94 """
+
+
+lexer.input(ej3)
+
+
+lexer.input(ej3)
+while True:
+  tok = lexer.token()
+  if not tok:
+    break 
+  print(tok.type, tok.value, tok.lineno, tok.lexpos)
+
+
+print("Ej4:");
+
+ej4 = """mientras(cierto){ yo_te_elijo("sa")} """
+
+
+lexer.input(ej4)
+
+
+lexer.input(ej4)
+while True:
+  tok = lexer.token()
+  if not tok:
+    break 
+  print(tok.type, tok.value, tok.lineno, tok.lexpos)
